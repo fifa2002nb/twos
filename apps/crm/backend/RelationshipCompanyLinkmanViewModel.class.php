@@ -10,7 +10,8 @@ class RelationshipCompanyLinkmanViewModel extends CommonViewModel {
 
     protected $viewFields = array(
         "RelationshipCompanyLinkman"=> array('*', "_type"=>"left"),
-        "RelationshipCompany" => array("name"=>"company_name", "_type"=>"left", "_on"=>"RelationshipCompany.id=RelationshipCompanyLinkman.relationship_company_id")
+        "RelationshipCompany" => array("name"=>"company_name", "_type"=>"left", "_on"=>"RelationshipCompany.id=RelationshipCompanyLinkman.relationship_company_id")，
+        "User" => array("truename"=>"owner", "_on"=>"RelationshipCompany.user_id=User.id", "_type"=>"left")
     );
 
     public $searchFields = array(

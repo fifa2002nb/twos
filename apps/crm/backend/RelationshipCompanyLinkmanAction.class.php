@@ -14,6 +14,8 @@ class RelationshipCompanyLinkmanAction extends CommonAction {
 
     protected $dataModelAlias = "crmContact";
 
+    protected $departmentModel = "Department";
+
     protected function _filter(&$map) {
         $map["RelationshipCompany.deleted"] = array("NEQ", 1);
     }
