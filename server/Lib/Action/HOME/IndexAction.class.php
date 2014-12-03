@@ -12,7 +12,7 @@ class IndexAction extends CommonAction {
         $this->assign("isDebug", APP_DEBUG ? 'true' : 'false');
         $this->assign("APP_DEBUG", APP_DEBUG);
 
-        $this->assign("siteTitle", DBC("site.title"));
+        $this->assign("siteTitle", "XXX泉");
 
         $loadedApps = F("loadedApp");
         $this->assign("loadedApps", $loadedApps);
