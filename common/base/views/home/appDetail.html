@@ -1,0 +1,75 @@
+<pageactions></pageactions>
+<div class="widget-box">
+    <div class="widget-header widget-header-flat">
+        <h5><span ng-bind="appInfo.name"></span> - <small ng-bind="appInfo.alias"></small></h5>
+
+        <div class="widget-toolbar">
+            <small ng-bind="'lang.appPoweredBy'|lang"></small> :
+            <a ng-href="{{appInfo.link}}" target="_blank" ng-bind="appInfo.author"></a>
+        </div>
+    </div>
+
+    <div class="widget-body">
+        <div class="widget-main">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="col-sm-7 appDetail">
+                        <h5 class="bolder" ng-bind="'lang.appDesc'|lang"></h5>
+                        <p class="grey" ng-bind-html="appInfo.content"></p>
+                        <div ng-show="appInfo.versions[appInfo.currentVersion].requirements[0]">
+                            <h5 class="bolder" ng-bind="'lang.requirementsApp'|lang"></h5>
+                            <p>
+                                <a class="label label-info arrowed arrowed-in-right"
+                                      ng-class="{'label-danger':!isAppLoaded(req)}"
+                                      ng-repeat="req in appInfo.versions[appInfo.currentVersion].requirements"
+                                      ng-bind="'lang.App'+req.ucfirst()+'.appName'|lang:'':req"
+                                      ng-click="$root.goPage('HOME/viewDetail/apps/alias/'+req)">
+                                </a>
+                            </p>
+                        </div>
+                        <h5 class="bolder" ng-bind="'lang.appUpdateHistory'|lang"></h5>
+                        <p class="grey">
+                            <ul ng-repeat="ver in appInfo.versions">
+                                <li>
+                                    <i class="icon icon-arrow-up green"></i>
+                                    <strong class="green bolder">v{{ver.version}} </strong>
+                                    <span class="smaller grey">  - [{{ver.dateline|dateFormat:1}}] </span>
+                                    <p>{{ver.updates}}</p>
+                                </li>
+                            </ul>
+                        </p>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4">
+                        <br />
+                        <p ng-show="appInfo.installed"><icon class="icon icon-leaf green"></icon> <span ng-bind="'lang.Installed'|lang"></span></p>
+                        <p ng-show="appInfo.hasUpdate"><icon class="icon icon-arrow-up green"></icon> <span ng-bind="'lang.HasUpdate'|lang"></span></p>
+                        <p>
+                            <span ng-bind="'lang.appLatestVersion'|lang"></span>:
+                            <span class="green"> v<stong ng-bind="appInfo.latest_version"></stong></span>
+                        </p>
+                        <p ng-show="appInfo.currentVersion">
+                            <span ng-bind="'lang.appCurrentVersion'|lang"></span>:
+                            <span class="green"> v<stong ng-bind="appInfo.currentVersion"></stong></span>
+                        </p>
+                    </div>
+                    <div class="col-sm-12" ng-show="consoleMessages.length > 0">
+                        <div class="alert alert-{{consoleClass}}">
+                            <dl>
+                                <dd ng-repeat="cm in consoleMessages" ng-bind="cm"></dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix form-actions center">
+            <button ng-click="doAppInstall()" ng-show="!appInfo.installed" class="btn btn-primary" ng-bind="'lang.actions.install'|lang"></button>
+            <button ng-click="doAppUpgrade()" ng-show="appInfo.hasUpdate" class="btn btn-success" ng-bind="'lang.actions.upgrade'|lang"></button>
+            <button ng-click="doAppInactive()" ng-show="appInfo.status=='1' && !isPrimaryApp(appInfo.alias)" class="btn btn-info" ng-bind="'lang.actions.inactive'|lang"></button>
+            <button ng-click="doAppActive()" ng-show="appInfo.installed&&appInfo.status=='0'" class="btn btn-success" ng-bind="'lang.actions.active'|lang"></button>
+            <button ng-click="doAppUninstall()" ng-show="appInfo.installed && !isPrimaryApp(appInfo.alias)" class="btn btn-danger" ng-bind="'lang.actions.uninstall'|lang"></button>
+            <a href="javascript:history.back();" ng-bind="'lang.actions.return'|lang" class="btn"></a>
+        </div>
+    </div>
+</div>
