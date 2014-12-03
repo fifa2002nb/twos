@@ -16,6 +16,7 @@ class RelationshipCompanyAction extends CommonAction {
     protected $relation = true;
 
     protected $indexModel = "RelationshipCompanyView";
+    protected $departmentModel = "Department";
 
     protected function pretreatment() {
 

@@ -362,12 +362,9 @@ class CommonAction extends RestAction {
         //add by xuye  xysmiracle@hotmail.com
         //增加权限判断，只能看到自己部门和下属部门的信息
         if($this->departmentModel){
-            $model = D($this->departmentModel);
-            $tree = $model->getTree(getCurrentUid());
-            foreach($tree as $k=>$t) {
-                $departmentIds[] = $t["id"];
-            }
-            $map["User.department_id"] = array("IN", $departmentIds);
+            $userModel = D("User");
+            $departmentIds = $userModel->getChildrenDepartments(true, getCurrentUid());
+            $map["User.department_id"] = array("IN", $departmentIds); 
         }
         //仅回收站数据
         if($_GET["onlyTrash"]) {

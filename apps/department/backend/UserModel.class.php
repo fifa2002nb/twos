@@ -70,7 +70,7 @@ class UserModel extends CommonModel {
     }
 
     public function getLeadedDepartments($onlyId=true, $uid=null) {
-        $uid = $uid || getCurrentUid();
+        $uid = （null != $uid) ? $uid ： getCurrentUid();
 
         $model = D("Department");
 
@@ -98,6 +98,32 @@ class UserModel extends CommonModel {
 
         return getArrayField($departments);
     }
+
+    //add by xuye
+    public function getChildrenDepartments($onlyId=true, $uid=null){
+        $uid = (null != $uid) ? $uid : getCurrentUid();
+        $model = D("Department");
+        $theUser = $this->find($uid);
+        $depId = $theUser["department_id"];
+        $tmp = $model->getTree($depId);
+        $departments = array();
+        if($onlyId)
+            foreach($tmp as $k=>$t) {
+                $departments[] = $t["id"];
+            }
+        else
+            foreach($tmp as $k=>$t) {
+                $departments[] = $t;
+            }
+        return $departments;
+    }
     
 }
+
+
+
+
+
+
+
 
