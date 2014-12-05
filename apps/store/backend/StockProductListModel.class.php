@@ -53,10 +53,11 @@ class StockProductListModel extends Model {
          */
         $cleanData = array();
         foreach($data as $k=>$v) {
-            if(array_key_exists($v["factory_code_all"], $cleanData)) {
-                $cleanData[$v["factory_code_all"]]["num"] += $v["num"];
+            $key = $v["factory_code_all"]."-".$v["stock_id"];
+            if(array_key_exists($key, $cleanData)) {
+                $cleanData[$key]["num"] += $v["num"];
             } else {
-                $cleanData[$v["factory_code_all"]] = $v;
+                $cleanData[$key] = $v;
             }
         }
 
