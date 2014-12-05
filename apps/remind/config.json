@@ -1,8 +1,0 @@
-{
-    "alias" : "remind",
-    "version": "0.1",
-    "plugins": {
-        "nav_bar_dropdown_html": ["ONESRemindHTML"],
-        "before_check_action_permission": ["ONESRemindBeforeCheckPermission"]
-    }
-}
