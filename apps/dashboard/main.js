@@ -163,7 +163,7 @@
                     appBtns[app.name] = app;
                 });
 
-                wizard.showPopover("#dashboard_appBtn_app_center", "dashboard.after.install.appCenterBtn");
+                wizard.showPopover("#dashboard_appBtn_app_center", "dashboard.after.install.appCenterBtn", "right");
 
                 /**
                  * 桌面块
@@ -202,6 +202,10 @@
                     angular.forEach(data.btns, function(item){
                         $scope.appBtns.push(appBtns[item.name]);
                     });
+
+                    if(!$scope.appBtns.length) {
+                        $scope.appBtns.push(appBtns.app_center);
+                    }
 
                     ones.pluginScope.remove("dashboardBlocks");
                 });

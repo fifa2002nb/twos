@@ -4,7 +4,7 @@
     <meta name="renderer" content="webkit" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <title>{$siteTitle}</title>
+    <title>洁姆山泉ERP系统</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <link rel="shortcut icon" href="common/statics/images/favicon.ico" />
@@ -30,7 +30,7 @@
         <div class="navbar-header pull-right navbar-user" role="navigation">
             <ul class="nav ace-nav">
                 {:tag("nav_bar_dropdown_html")}
-                <li class="topSetting">
+                <li class="topSetting" id="topest_setting_btn">
                     <a data-toggle="dropdown" class="dropdown-toggle">
                         <i class="icon icon-cog"></i>
                         <span class="badge badge-important ng-binding ng-hide" ng-bind="reminds.length" ng-show="reminds.length>0">0</span>
@@ -164,7 +164,7 @@
                 <hr class="hr-10 hr-double" />
                 <div class="row footer-copy">
                     <p class="text-center">
-                        &copy; 2014 Present by <a href="http://www.ng-erp.com" target="_blank">ONES Team</a>
+                        &copy; 2014 Present by <a href="http://www.apmbe.com" target="_blank">VERYSOFT Team</a>
                         v{:DBC('system.version')}
                     </p>
                 </div>

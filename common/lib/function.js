@@ -61,13 +61,13 @@ var toDate = function(timestamp, noTime) {
         case "1":
         case "true":
         case true:
-            mask = "MM-dd";
+            mask = "yyyy-MM-dd";
             break;
         case "":
         case undefined:
         case "0":
         case 0:
-            mask = "MM-dd HH:mm";
+            mask = "yyyy-MM-dd HH:mm";
             break;
         default:
             mask = noTime || "yyyy-MM-dd HH:mm:ss";
@@ -206,10 +206,10 @@ var appView = function(viewPath, app){
 //判断APP是否加载
 var isAppLoaded = function(appParam, version, compare) {
 
-    var expression, app;
+    var rs, app;
 
     compare = compare || ">=";
-    version = version || 0;
+    version = version || "0.0.0";
     if(appParam.app !== undefined && appParam.compare !== undefined) {
         app = appParam.app;
         compare = appParam.compare == "=" ? "==" : appParam.compare;
@@ -220,31 +220,72 @@ var isAppLoaded = function(appParam, version, compare) {
 
     for(var alias in ones.BaseConf.LoadedApps) {
 
-        expression = "false";
-
+        rs = undefined;
         if(app == "ones") {
-            expression = sprintf("'%s'%s'%s'", ones.BaseConf['system.version'], compare, version);
+            rs = versionCompare(ones.BaseConf["system.version"], version);
         } else {
             if(app == alias) {
                 if(!version) {
                     return true;
                 }
-                expression = sprintf("'%s'%s'%s'", ones.BaseConf.LoadedApps[alias], compare, version);
+                rs = versionCompare(ones.BaseConf.LoadedApps[alias], version);
             }
         }
 
-        if("false" !== expression) {
-            try {
-                return eval(expression);
-            } catch(e) {
-                return false;
+        if(undefined !== rs) {
+            switch(compare) {
+                case "==":
+                    return rs === 0;
+                    break;
+                case "<":
+                    return rs === -1;
+                    break;
+                case ">":
+                    return rs === 1;
+                    break;
+                case ">=":
+                    return rs === 1 || rs === 0;
+                    break;
+                case "<=":
+                    return rs === -1 || rs === 0;
+                    break;
             }
         }
-
 
     }
     return false;
 };
+
+/**
+ * 版本号比较
+ * */
+function versionCompare( stra, strb ) {
+    if(!strb || !stra) {
+        return 1;
+    }
+    var straArr = stra.split('.');
+    var strbArr = strb.split('.');
+    var maxLen = Math.max( straArr.length, strbArr.length );
+    var result, sa, sb;
+    for ( var i = 0; i < maxLen; i++ ) {
+        sa = ~~straArr[i];
+        sb = ~~strbArr[i];
+        if(sa > sb){
+            result = 1;
+        }
+        else if(sa < sb){
+            result = -1;
+        }
+        else {
+            result = 0;
+        }
+        if ( result !== 0 ) {
+            return result;
+        }
+    }
+    return result;
+}
+
 
 function HTMLEncode(html)
 {
